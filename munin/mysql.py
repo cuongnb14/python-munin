@@ -1,6 +1,6 @@
 
 import os, sys, re
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 from munin import MuninPlugin
 
 class MuninMySQLPlugin(MuninPlugin):
@@ -11,7 +11,7 @@ class MuninMySQLPlugin(MuninPlugin):
         super(MuninMySQLPlugin, self).__init__()
 
         self.dbname = ((sys.argv[0].rsplit('_', 1)[-1] if self.dbname_in_args else None)
-            or os.environ.get('DATABASE') or self.default_table)
+            or os.environ.get('DATABASE'))
 
         self.conninfo = dict(
             user = "root",
@@ -48,6 +48,7 @@ class MuninMySQLPlugin(MuninPlugin):
     def connection(self):
         if not hasattr(self, '_connection'):
             import MySQLdb
+            print(self.conninfo)
             self._connection = MySQLdb.connect(**self.conninfo)
         return self._connection
 

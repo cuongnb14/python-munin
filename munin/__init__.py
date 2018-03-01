@@ -1,10 +1,10 @@
-
 __version__ = "1.4"
 
 import os
 import sys
 import socket
 from decimal import Decimal
+
 
 class MuninPlugin(object):
     title = ""
@@ -39,39 +39,40 @@ class MuninPlugin(object):
             for arg_name, arg_value in field_args.iteritems():
                 conf.append('%s.%s %s' % (field_name, arg_name, arg_value))
 
-        print "\n".join(conf)
+        print("\n").join(conf)
 
     def suggest(self):
         sys.exit(1)
 
     def run(self):
-        cmd =  ((len(sys.argv) > 1) and sys.argv[1] or None) or "execute"
+        cmd = ((len(sys.argv) > 1) and sys.argv[1] or None) or "execute"
         if cmd == "execute":
             values = self.execute()
             if values:
                 for k, v in values.items():
-                    print "%s.value %s" % (k, v)
+                    print("%s.value %s" % (k, v))
         elif cmd == "autoconf":
             try:
                 ac = self.autoconf()
-            except Exception, exc:
-                print "no (%s)" % str(exc)
+            except Exception as e:
+                print("no (%s)" % str(e))
                 sys.exit(1)
             if not ac:
-                print "no"
+                print("no")
                 sys.exit(1)
-            print "yes"
+            print("yes")
         elif cmd == "config":
             self.config()
         elif cmd == "suggest":
             self.suggest()
         sys.exit(0)
 
+
 class MuninClient(object):
     def __init__(self, host, port=4949):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((host, port))
-        self.sock.recv(4096) # welcome, TODO: receive all
+        self.sock.recv(4096)  # welcome, TODO: receive all
 
     def _command(self, cmd, term):
         self.sock.send("%s\n" % cmd)

@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# python3 setup.py install
+
 from distutils.core import setup
 
 from munin import __version__ as version
