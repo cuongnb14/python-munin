@@ -41,7 +41,7 @@ class LoadPlugin(MuninPlugin):
     )
 
     def execute(self):
-        print("load.value {}".format(os.popen("cut -d' ' -f2  /proc/loadavg").read()))
+        return {"load": os.popen("cut -d' ' -f2  /proc/loadavg").read()}
 
 
 if __name__ == "__main__":
