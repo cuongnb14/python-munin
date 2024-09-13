@@ -36,7 +36,7 @@ class MuninPlugin(object):
                 conf.append('graph_%s %s' % (k, v))
 
         for field_name, field_args in self.fields:
-            for arg_name, arg_value in field_args.items:
+            for arg_name, arg_value in field_args.items():
                 conf.append('%s.%s %s' % (field_name, arg_name, arg_value))
 
         print("\n".join(conf))
